@@ -7,6 +7,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
+import flixel.ui.FlxButton;
 import haxe.Json;
 
 import openfl.Assets;
@@ -71,8 +72,12 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+
 		Paths.clearStoredMemory();
+
 		super.create();
+		FlxG.camera.bgColor = FlxColor.WHITE;
+
 		Paths.clearUnusedMemory();
 
 		if(!initialized)
@@ -216,7 +221,7 @@ class TitleState extends MusicBeatState
 		logo.antialiasing = ClientPrefs.data.antialiasing;
 		logo.screenCenter();
 
-		blackScreen = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+		blackScreen = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 		blackScreen.scale.set(FlxG.width, FlxG.height);
 		blackScreen.updateHitbox();
 		credGroup.add(blackScreen);
@@ -232,11 +237,14 @@ class TitleState extends MusicBeatState
 		ngSpr.screenCenter(X);
 		ngSpr.antialiasing = ClientPrefs.data.antialiasing;
 
-		// add(gfDance);
-		// add(logoBl); //FNF Logo
-		// add(titleText); //"Press Enter to Begin" text
-		add(credGroup);
-		add(ngSpr);
+	        var tmpButton:FlxButton;
+		tmpButton = new FlxButton(tmpButtonPosition.x, tmpButtonPosition.y, "Click me", onButtonClicked);
+		//add(gfDance);
+		//add(logoBl); //FNF Logo
+		add(tmpButton);
+		add(titleText); //"Press Enter to Begin" text
+		//add(credGroup);
+		//add(ngSpr);
 
 		if (initialized)
 			skipIntro();
@@ -246,6 +254,11 @@ class TitleState extends MusicBeatState
 		// credGroup.add(credTextShit);
 	}
 
+	function onButtonClicked()
+	{
+	  FlxG.camera.flash(FlxColor.RED, 0.33);
+	}
+
 	// JSON data
 	var characterImage:String = 'gfDanceTitle';
 	var animationName:String = 'gfDance';
@@ -253,7 +266,8 @@ class TitleState extends MusicBeatState
 	var gfPosition:FlxPoint = FlxPoint.get(512, 40);
 	var logoPosition:FlxPoint = FlxPoint.get(-150, -100);
 	var enterPosition:FlxPoint = FlxPoint.get(100, 576);
-	
+	var tmpButtonPosition:FlxPoint = FlxPoint.get(100, 476);
+
 	var useIdle:Bool = false;
 	var musicBPM:Float = 102;
 	var danceLeftFrames:Array<Int> = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29];
@@ -409,12 +423,12 @@ class TitleState extends MusicBeatState
 			
 			if(pressedEnter)
 			{
-				titleText.color = FlxColor.WHITE;
+				titleText.color = FlxColor.BLACK;
 				titleText.alpha = 1;
 				
 				if(titleText != null) titleText.animation.play('press');
 
-				FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
+				//FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.BLACK : 0x4CFFFFFF, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 				transitioning = true;
@@ -455,7 +469,9 @@ class TitleState extends MusicBeatState
 
 							FlxG.sound.play(Paths.sound('secret'));
 
-							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(1, 1, FlxColor.BLACK);
+							var black:FlxSprite =
+							new FlxSprite(0,
+							0).makeGraphic(1, 1, FlxColor.BLACK);
 							black.scale.set(FlxG.width, FlxG.height);
 							black.updateHitbox();
 							black.alpha = 0;
@@ -629,7 +645,7 @@ class TitleState extends MusicBeatState
 					default: //Go back to normal ugly ass boring GF
 						remove(ngSpr);
 						remove(credGroup);
-						FlxG.camera.flash(FlxColor.WHITE, 2);
+						//FlxG.camera.flash(FlxColor.BLACK, 2);
 						skippedIntro = true;
 
 						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
@@ -644,7 +660,7 @@ class TitleState extends MusicBeatState
 					{
 						remove(ngSpr);
 						remove(credGroup);
-						FlxG.camera.flash(FlxColor.WHITE, 0.6);
+						//FlxG.camera.flash(FlxColor.BLACK, 0.6);
 						transitioning = false;
 					});
 				}
@@ -652,7 +668,7 @@ class TitleState extends MusicBeatState
 				{
 					remove(ngSpr);
 					remove(credGroup);
-					FlxG.camera.flash(FlxColor.WHITE, 3);
+					//FlxG.camera.flash(FlxColor.BLACK, 3);
 					sound.onComplete = function() {
 						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
@@ -666,7 +682,7 @@ class TitleState extends MusicBeatState
 			{
 				remove(ngSpr);
 				remove(credGroup);
-				FlxG.camera.flash(FlxColor.WHITE, 4);
+				//FlxG.camera.flash(FlxColor.BLACK, 4);
 
 				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
 				if (easteregg == null) easteregg = '';
