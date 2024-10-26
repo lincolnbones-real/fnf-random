@@ -233,8 +233,8 @@ class TitleState extends MusicBeatState
 		ngSpr.antialiasing = ClientPrefs.data.antialiasing;
 
 		// add(gfDance);
-		add(logoBl); //FNF Logo
-		add(titleText); //"Press Enter to Begin" text
+		// add(logoBl); //FNF Logo
+		// add(titleText); //"Press Enter to Begin" text
 		add(credGroup);
 		add(ngSpr);
 
