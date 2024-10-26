@@ -1,0 +1,3 @@
+! I replaced the original fonts with `kindergarten` but did not change their
+names in code to avoid having to revert a lot of stuff if I change my mind
+later.
