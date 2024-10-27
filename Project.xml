@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Funkin-Random" file="FNF Funkin Random" packageName="com.lincolnbones.funkinrandom" package="com.lincolnbones.funkinrandom" main="Main" version="0.2.8" company="LincolnBones" />
+	<app title="FNF: Funkin Random" file="Funkin Random" packageName="com.lincolnbones.funkinrandom" package="com.lincolnbones.funkinrandom" main="Main" version="0.2.8" company="LincolnBones" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
