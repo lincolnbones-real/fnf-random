@@ -159,13 +159,23 @@ class TitleState extends MusicBeatState
     #if TITLE_SCREEN_EASTER_EGG easterEggData(); #end
     Conductor.bpm = musicBPM;
 
-    logoBl = new FlxSprite(logoPosition.x, logoPosition.y);
-    logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-    logoBl.antialiasing = ClientPrefs.data.antialiasing;
-
+    //logoBl = new FlxSprite(logoPosition.x, logoPosition.y);
+    //logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+    //logoBl.antialiasing = ClientPrefs.data.antialiasing;
     //logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
     //logoBl.animation.play('bump');
-    logoBl.updateHitbox();
+    //logoBl.updateHitbox();
+
+    logoBl = new FlxSprite();
+    logoBl.loadGraphic("assets/shared/images/logoBumpin.png");
+    logoBl.antialiasing = ClientPrefs.data.antialiasing;
+    // Scaling here compensates for the image not being the perfect size
+    // logoBl.setGraphicSize(0.75, 0.75); <--- This did not work
+    logoBl.scale.x = 0.75;
+    logoBl.scale.y = 0.75;
+    //logoBl.setPosition(120, -100);  // Center screen
+    //logoBl.setPosition(120, -663); // Just off screen center top
+    logoBl.setPosition(120, -260); // Center top
 
     gfDance = new FlxSprite(gfPosition.x, gfPosition.y);
     gfDance.antialiasing = ClientPrefs.data.antialiasing;
