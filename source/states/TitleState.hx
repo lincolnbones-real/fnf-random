@@ -173,9 +173,10 @@ class TitleState extends MusicBeatState
     // logoBl.setGraphicSize(0.75, 0.75); <--- This did not work
     logoBl.scale.x = 0.75;
     logoBl.scale.y = 0.75;
-    //logoBl.setPosition(120, -100);  // Center screen
-    //logoBl.setPosition(120, -663); // Just off screen center top
-    logoBl.setPosition(120, -260); // Center top
+
+    //var logoStartingPosition:FlxPoint = cameraPositionOffScreenCenterTop
+    var logoEndPosition:FlxPoint = cameraPositionOnScreenCenterTop;
+    logoBl.setPosition(logoEndPosition.x, logoEndPosition.y);
 
     gfDance = new FlxSprite(gfPosition.x, gfPosition.y);
     gfDance.antialiasing = ClientPrefs.data.antialiasing;
@@ -269,7 +270,13 @@ class TitleState extends MusicBeatState
   var animationName:String = 'gfDance';
 
   var gfPosition:FlxPoint = FlxPoint.get(512, 40);
-  var logoPosition:FlxPoint = FlxPoint.get(-150, -100);
+
+  //var logoPosition:FlxPoint = FlxPoint.get(-150, -100);
+  static var cameraPositionOffScreenTop:FlxPoint = FlxPoint.get(0, -663);
+  static var centerScreen:FlxPoint = FlxPoint.get(120, -100);
+  static var cameraPositionOffScreenCenterTop:FlxPoint = FlxPoint.get(centerScreen.x, cameraPositionOffScreenTop.y);
+  static var cameraPositionOnScreenCenterTop:FlxPoint = FlxPoint.get(centerScreen.x, -260);
+
   var enterPosition:FlxPoint = FlxPoint.get(100, 576);
   var tmpButtonPosition:FlxPoint = FlxPoint.get(100, 476);
 
@@ -289,7 +296,7 @@ class TitleState extends MusicBeatState
         {
           var titleJSON:TitleData = tjson.TJSON.parse(titleRaw);
           gfPosition.set(titleJSON.gfx, titleJSON.gfy);
-          logoPosition.set(titleJSON.titlex, titleJSON.titley);
+          //logoPosition.set(titleJSON.titlex, titleJSON.titley);
           enterPosition.set(titleJSON.startx, titleJSON.starty);
           musicBPM = titleJSON.bpm;
 
