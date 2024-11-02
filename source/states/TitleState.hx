@@ -240,7 +240,7 @@ class TitleState extends MusicBeatState
 	        var tmpButton:FlxButton;
 		tmpButton = new FlxButton(tmpButtonPosition.x, tmpButtonPosition.y, "Click me", onButtonClicked);
 		//add(gfDance);
-		//add(logoBl); //FNF Logo
+		add(logoBl); //FNF Logo
 		add(tmpButton);
 		add(titleText); //"Press Enter to Begin" text
 		//add(credGroup);
