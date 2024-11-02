@@ -2,112 +2,123 @@ package states.stages;
 
 class Spooky extends BaseStage
 {
-	var halloweenBG:BGSprite;
-	var halloweenWhite:BGSprite;
-	override function create()
-	{
-		if(!ClientPrefs.data.lowQuality) {
-			halloweenBG = new BGSprite('halloween_bg', -200, -100, ['halloweem bg0', 'halloweem bg lightning strike']);
-		} else {
-			halloweenBG = new BGSprite('halloween_bg_low', -200, -100);
-		}
-		add(halloweenBG);
+  var halloweenBG:BGSprite;
+  var halloweenWhite:BGSprite;
 
-		//PRECACHE SOUNDS
-		Paths.sound('thunder_1');
-		Paths.sound('thunder_2');
+  override function create()
+  {
+    if (!ClientPrefs.data.lowQuality)
+    {
+      halloweenBG = new BGSprite('halloween_bg', -200, -100, ['halloweem bg0', 'halloweem bg lightning strike']);
+    }
+    else
+    {
+      halloweenBG = new BGSprite('halloween_bg_low', -200, -100);
+    }
+    add(halloweenBG);
 
-		//Monster cutscene
-		if (isStoryMode && !seenCutscene)
-		{
-			switch(songName)
-			{
-				case 'monster':
-					setStartCallback(monsterCutscene);
-			}
-		}
-	}
-	override function createPost()
-	{
-		halloweenWhite = new BGSprite(null, -800, -400, 0, 0);
-		halloweenWhite.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
-		halloweenWhite.alpha = 0;
-		halloweenWhite.blend = ADD;
-		add(halloweenWhite);
-	}
+    // PRECACHE SOUNDS
+    Paths.sound('thunder_1');
+    Paths.sound('thunder_2');
 
-	var lightningStrikeBeat:Int = 0;
-	var lightningOffset:Int = 8;
-	override function beatHit()
-	{
-		if (FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
-		{
-			lightningStrikeShit();
-		}
-	}
+    // Monster cutscene
+    if (isStoryMode && !seenCutscene)
+    {
+      switch (songName)
+      {
+        case 'monster':
+          setStartCallback(monsterCutscene);
+      }
+    }
+  }
 
-	function lightningStrikeShit():Void
-	{
-		FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2));
-		if(!ClientPrefs.data.lowQuality) halloweenBG.animation.play('halloweem bg lightning strike');
+  override function createPost()
+  {
+    halloweenWhite = new BGSprite(null, -800, -400, 0, 0);
+    halloweenWhite.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
+    halloweenWhite.alpha = 0;
+    halloweenWhite.blend = ADD;
+    add(halloweenWhite);
+  }
 
-		lightningStrikeBeat = curBeat;
-		lightningOffset = FlxG.random.int(8, 24);
+  var lightningStrikeBeat:Int = 0;
+  var lightningOffset:Int = 8;
 
-		if(boyfriend.hasAnimation('scared'))
-			boyfriend.playAnim('scared', true);
+  override function beatHit()
+  {
+    if (FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
+    {
+      lightningStrikeShit();
+    }
+  }
 
-		if(dad.hasAnimation('scared'))
-			dad.playAnim('scared', true);
+  function lightningStrikeShit():Void
+  {
+    FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2));
+    if (!ClientPrefs.data.lowQuality)
+      halloweenBG.animation.play('halloweem bg lightning strike');
 
-		if(gf != null && gf.hasAnimation('scared'))
-			gf.playAnim('scared', true);
+    lightningStrikeBeat = curBeat;
+    lightningOffset = FlxG.random.int(8, 24);
 
-		if(ClientPrefs.data.camZooms) {
-			FlxG.camera.zoom += 0.015;
-			camHUD.zoom += 0.03;
+    if (boyfriend.hasAnimation('scared'))
+      boyfriend.playAnim('scared', true);
 
-			if(!game.camZooming) { //Just a way for preventing it to be permanently zoomed until Skid & Pump hits a note
-				FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 0.5);
-				FlxTween.tween(camHUD, {zoom: 1}, 0.5);
-			}
-		}
+    if (dad.hasAnimation('scared'))
+      dad.playAnim('scared', true);
 
-		if(ClientPrefs.data.flashing) {
-			halloweenWhite.alpha = 0.4;
-			FlxTween.tween(halloweenWhite, {alpha: 0.5}, 0.075);
-			FlxTween.tween(halloweenWhite, {alpha: 0}, 0.25, {startDelay: 0.15});
-		}
-	}
+    if (gf != null && gf.hasAnimation('scared'))
+      gf.playAnim('scared', true);
 
-	function monsterCutscene()
-	{
-		inCutscene = true;
-		camHUD.visible = false;
+    if (ClientPrefs.data.camZooms)
+    {
+      FlxG.camera.zoom += 0.015;
+      camHUD.zoom += 0.03;
 
-		FlxG.camera.focusOn(new FlxPoint(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100));
+      if (!game.camZooming)
+      { // Just a way for preventing it to be permanently zoomed until Skid & Pump hits a note
+        FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 0.5);
+        FlxTween.tween(camHUD, {zoom: 1}, 0.5);
+      }
+    }
 
-		// character anims
-		FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2));
-		if(gf != null) gf.playAnim('scared', true);
-		boyfriend.playAnim('scared', true);
+    if (ClientPrefs.data.flashing)
+    {
+      halloweenWhite.alpha = 0.4;
+      FlxTween.tween(halloweenWhite, {alpha: 0.5}, 0.075);
+      FlxTween.tween(halloweenWhite, {alpha: 0}, 0.25, {startDelay: 0.15});
+    }
+  }
 
-		// white flash
-		var whiteScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
-		whiteScreen.scrollFactor.set();
-		whiteScreen.blend = ADD;
-		add(whiteScreen);
-		FlxTween.tween(whiteScreen, {alpha: 0}, 1, {
-			startDelay: 0.1,
-			ease: FlxEase.linear,
-			onComplete: function(twn:FlxTween)
-			{
-				remove(whiteScreen);
-				whiteScreen.destroy();
+  function monsterCutscene()
+  {
+    inCutscene = true;
+    camHUD.visible = false;
 
-				camHUD.visible = true;
-				startCountdown();
-			}
-		});
-	}
+    FlxG.camera.focusOn(new FlxPoint(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100));
+
+    // character anims
+    FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2));
+    if (gf != null)
+      gf.playAnim('scared', true);
+    boyfriend.playAnim('scared', true);
+
+    // white flash
+    var whiteScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
+    whiteScreen.scrollFactor.set();
+    whiteScreen.blend = ADD;
+    add(whiteScreen);
+    FlxTween.tween(whiteScreen, {alpha: 0}, 1, {
+      startDelay: 0.1,
+      ease: FlxEase.linear,
+      onComplete: function(twn:FlxTween)
+      {
+        remove(whiteScreen);
+        whiteScreen.destroy();
+
+        camHUD.visible = true;
+        startCountdown();
+      }
+    });
+  }
 }

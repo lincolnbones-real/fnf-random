@@ -2,43 +2,47 @@ package states.stages.objects;
 
 class BackgroundGirls extends FlxSprite
 {
-	var isPissed:Bool = true;
-	public function new(x:Float, y:Float)
-	{
-		super(x, y);
+  var isPissed:Bool = true;
 
-		// BG fangirls dissuaded
-		frames = Paths.getSparrowAtlas('weeb/bgFreaks');
-		antialiasing = false;
-		swapDanceType();
+  public function new(x:Float, y:Float)
+  {
+    super(x, y);
 
-		setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-		updateHitbox();
-		animation.play('danceLeft');
-	}
+    // BG fangirls dissuaded
+    frames = Paths.getSparrowAtlas('weeb/bgFreaks');
+    antialiasing = false;
+    swapDanceType();
 
-	var danceDir:Bool = false;
+    setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+    updateHitbox();
+    animation.play('danceLeft');
+  }
 
-	public function swapDanceType():Void
-	{
-		isPissed = !isPissed;
-		if(!isPissed) { //Gets unpissed
-			animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
-			animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
-		} else { //Pisses
-			animation.addByIndices('danceLeft', 'BG fangirls dissuaded', CoolUtil.numberArray(14), "", 24, false);
-			animation.addByIndices('danceRight', 'BG fangirls dissuaded', CoolUtil.numberArray(30, 15), "", 24, false);
-		}
-		dance();
-	}
+  var danceDir:Bool = false;
 
-	public function dance():Void
-	{
-		danceDir = !danceDir;
+  public function swapDanceType():Void
+  {
+    isPissed = !isPissed;
+    if (!isPissed)
+    { // Gets unpissed
+      animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
+      animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
+    }
+    else
+    { // Pisses
+      animation.addByIndices('danceLeft', 'BG fangirls dissuaded', CoolUtil.numberArray(14), "", 24, false);
+      animation.addByIndices('danceRight', 'BG fangirls dissuaded', CoolUtil.numberArray(30, 15), "", 24, false);
+    }
+    dance();
+  }
 
-		if (danceDir)
-			animation.play('danceRight', true);
-		else
-			animation.play('danceLeft', true);
-	}
+  public function dance():Void
+  {
+    danceDir = !danceDir;
+
+    if (danceDir)
+      animation.play('danceRight', true);
+    else
+      animation.play('danceLeft', true);
+  }
 }
